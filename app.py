@@ -712,12 +712,14 @@ with maze_col:
     st.markdown('<div class="maze-controls">', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("🔄 New Adventure", type="primary", use_container_width=True):
+        
+        if st.button("🔄 New Adventure", key="new_main", type="primary", use_container_width=True):
             st.session_state.game = new_game_state()
             st.rerun()
     with col2:
         if st.button(
             "💡 Need a Clue?",
+            key="clue_btn",
             type="secondary",
             disabled=state["finished"],
             use_container_width=True,
@@ -863,6 +865,7 @@ if state["finished"]:
         unsafe_allow_html=True,
     )
 
-    if st.button("🔄 New Adventure", type="primary", use_container_width=True):
+    
+    if st.button("🔄 New Adventure", key="new_results", type="primary", use_container_width=True):
         st.session_state.game = new_game_state()
         st.rerun()
