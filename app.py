@@ -1,7 +1,6 @@
 """
-app.py
-------
-Maze Explorer
+Maze Explorer — Complete Streamlit App
+An interactive maze game that uses K-Means clustering to classify navigation styles.
 """
 
 import random
@@ -22,6 +21,9 @@ from utils import (
 
 MAZE_SIZE = 10
 
+# ============================================================
+# 1. PAGE CONFIG
+# ============================================================
 st.set_page_config(
     page_title="Maze Explorer",
     page_icon="🗺️",
@@ -29,9 +31,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ------------------------------------------------------------------ #
-# SVG icons
-# ------------------------------------------------------------------ #
+# ============================================================
+# 2. ICONS (SVG)
+# ============================================================
 ICONS = {
     "compass": (
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
@@ -183,137 +185,241 @@ HERO_QUOTES = [
     "In every maze, there's a way out.",
 ]
 
-# ------------------------------------------------------------------ #
-# Custom CSS
-# ------------------------------------------------------------------ #
+# ============================================================
+# 3. CUSTOM CSS (Universal Responsive)
+# ============================================================
 st.markdown(
     """
 <style>
+    /* ============================================================
+       BASE STYLES (Mobile First)
+       ============================================================ */
     .stApp {
         background: radial-gradient(circle at 20% 0%, #1a1d2e 0%, #0f1117 55%, #0b0d14 100%);
+        padding: 0 !important;
     }
+
+    /* ============================================================
+       HEADER - Scales down on mobile
+       ============================================================ */
     .hero-title {
-        font-size: 3.2rem;
+        font-size: 1.6rem;
         font-weight: 800;
         background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #FFE66D);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 0;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 8px;
+        flex-wrap: wrap;
     }
     .hero-subtitle {
         text-align: center;
         color: #94a3b8;
-        font-size: 1.05rem;
-        margin-top: 4px;
+        font-size: 0.85rem;
+        margin-top: 2px;
         margin-bottom: 2px;
-        letter-spacing: 0.5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
-    .hero-quote {
-        text-align: center;
-        color: #4ECDC4;
-        font-size: 0.9rem;
-        font-style: italic;
-        opacity: 0.8;
-        margin-bottom: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
+        flex-wrap: wrap;
     }
-    div.stButton > button {
-        font-weight: 600;
-        border-radius: 14px;
-        border: none;
-        padding: 0.5rem 1.5rem !important;
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-        width: 100% !important;
+    .hero-quote {
+        text-align: center;
+        color: #4ECDC4;
+        font-size: 0.75rem;
+        font-style: italic;
+        opacity: 0.8;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex-wrap: wrap;
     }
-    div.stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #FF6B6B, #ee5a24) !important;
-        color: white !important;
-        box-shadow: 0 4px 18px rgba(255, 107, 107, 0.3);
+
+    /* ============================================================
+       MESSAGE BAR
+       ============================================================ */
+    .msg-bar {
+        border-radius: 10px;
+        background: rgba(78, 205, 196, 0.06);
+        border: 1px solid rgba(78, 205, 196, 0.12);
+        color: #e5e7eb;
+        padding: 6px 12px;
+        margin: 4px 0 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8rem;
+        flex-wrap: wrap;
     }
-    div.stButton > button[kind="primary"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 26px rgba(255, 107, 107, 0.45);
+
+    /* ============================================================
+       MAZE CONTAINER
+       ============================================================ */
+    .maze-container {
+        background: rgba(0,0,0,0.2);
+        border-radius: 12px;
+        padding: 8px;
+        border: 1px solid rgba(255,255,255,0.05);
+        max-width: 100%;
+        overflow: hidden;
     }
-    div.stButton > button[kind="secondary"] {
-        background: rgba(78, 205, 196, 0.12) !important;
-        border: 1px solid rgba(78, 205, 196, 0.35) !important;
-        color: #e5e7eb !important;
+    .maze-container img {
+        max-width: 100%;
+        height: auto;
     }
-    div.stButton > button[kind="secondary"]:hover {
-        transform: translateY(-2px);
-        border-color: #4ECDC4;
-        box-shadow: 0 6px 20px rgba(78, 205, 196, 0.25);
-    }
+
+    /* ============================================================
+       STATS
+       ============================================================ */
     .stat-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 6px 0;
+        padding: 4px 0;
         border-bottom: 1px solid rgba(255,255,255,0.04);
+        flex-wrap: wrap;
     }
     .stat-row:last-child { border-bottom: none; }
     .stat-label {
         color: #94a3b8;
-        font-size: 14px;
+        font-size: 12px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
     .stat-value {
         color: #e5e7eb;
-        font-size: 16px;
+        font-size: 13px;
         font-weight: 600;
     }
     .stat-value.green { color: #4ECDC4; }
     .stat-value.red { color: #FF6B6B; }
     .stat-value.yellow { color: #FFE66D; }
     .stat-value.blue { color: #60a5fa; }
-    .msg-bar {
+
+    /* ============================================================
+       NAVIGATION BUTTONS
+       ============================================================ */
+    .arrow-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin: 6px 0;
+        width: 100%;
+    }
+    .arrow-row {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .arrow-btn {
+        font-size: 1.5rem;
+        width: 50px;
+        height: 50px;
+        min-width: 44px;
+        min-height: 44px;
+        text-align: center;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid #2a2a3e;
         border-radius: 12px;
-        background: rgba(78, 205, 196, 0.06);
-        border: 1px solid rgba(78, 205, 196, 0.15);
-        color: #e5e7eb;
-        padding: 8px 16px;
-        margin: 6px 0 10px 0;
+        color: #e6edf3;
+        touch-action: manipulation;
+        user-select: none;
+        padding: 0;
         display: flex;
         align-items: center;
-        gap: 10px;
-        font-size: 0.95rem;
+        justify-content: center;
+        transition: all 0.15s ease;
     }
+    .arrow-btn:active {
+        background: rgba(255,255,255,0.2);
+        transform: scale(0.92);
+    }
+
+    /* ============================================================
+       ACTION BUTTONS
+       ============================================================ */
+    div.stButton > button {
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        width: 100%;
+        min-height: 44px;
+        border: none;
+        transition: all 0.15s ease;
+    }
+    div.stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #FF6B6B, #ee5a24) !important;
+        color: white !important;
+        box-shadow: 0 4px 18px rgba(255, 107, 107, 0.25);
+    }
+    div.stButton > button[kind="primary"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 26px rgba(255, 107, 107, 0.4);
+    }
+    div.stButton > button[kind="secondary"] {
+        background: rgba(78, 205, 196, 0.10) !important;
+        border: 1px solid rgba(78, 205, 196, 0.3) !important;
+        color: #e5e7eb !important;
+    }
+    div.stButton > button[kind="secondary"]:hover {
+        transform: translateY(-2px);
+        border-color: #4ECDC4;
+        box-shadow: 0 6px 20px rgba(78, 205, 196, 0.2);
+    }
+
+    .maze-controls {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+        margin-bottom: 4px;
+        flex-wrap: wrap;
+    }
+    .maze-controls > div {
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* ============================================================
+       PROGRESS BAR
+       ============================================================ */
     .progress-label {
         color: #94a3b8;
-        font-size: 12px;
+        font-size: 11px;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         font-weight: 600;
         display: flex;
         align-items: center;
         gap: 6px;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
     }
+
+    /* ============================================================
+       RESULTS
+       ============================================================ */
     .result-card {
         background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(78,205,196,0.08));
-        border-radius: 20px;
-        padding: 26px;
+        border-radius: 16px;
+        padding: 20px;
         border: 1px solid rgba(255,255,255,0.06);
         text-align: center;
-        margin: 18px 0;
+        margin: 12px 0;
     }
     .style-name {
-        font-size: 1.75rem;
+        font-size: 1.4rem;
         font-weight: 700;
         background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
         -webkit-background-clip: text;
@@ -321,68 +427,129 @@ st.markdown(
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        margin-top: 8px;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 4px;
     }
     .confidence-pill {
         display: inline-flex;
         align-items: center;
         gap: 6px;
         background: rgba(255,255,255,0.06);
-        padding: 4px 16px;
+        padding: 4px 14px;
         border-radius: 20px;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: #4ECDC4;
-        margin-top: 10px;
+        margin-top: 6px;
     }
     .fun-fact {
         text-align: center;
         color: #4ECDC4;
-        font-size: 0.9rem;
-        padding: 12px;
+        font-size: 0.85rem;
+        padding: 10px;
         background: rgba(78, 205, 196, 0.04);
         border-radius: 10px;
         border: 1px dashed rgba(78, 205, 196, 0.15);
-        margin-top: 14px;
+        margin-top: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
+        flex-wrap: wrap;
     }
-    .section-header {
-        color: #e5e7eb;
-        font-weight: 600;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 1.1rem;
+
+    /* ============================================================
+       RESPONSIVE BREAKPOINTS
+       ============================================================ */
+    @media (max-width: 480px) {
+        .hero-title { font-size: 1.4rem; }
+        .hero-subtitle { font-size: 0.75rem; }
+        .hero-quote { font-size: 0.65rem; }
+        .msg-bar { font-size: 0.7rem; padding: 4px 10px; }
+        .arrow-btn { width: 42px; height: 42px; font-size: 1.2rem; min-width: 38px; min-height: 38px; }
+        div.stButton > button { font-size: 0.8rem; padding: 8px 12px; min-height: 38px; }
+        .stat-label { font-size: 10px; }
+        .stat-value { font-size: 11px; }
+        .style-name { font-size: 1.1rem; }
+        .maze-container { padding: 4px; }
+        .result-card { padding: 14px; }
+        .maze-controls { gap: 4px; }
+        .arrow-grid { gap: 4px; }
+        .arrow-row { gap: 4px; }
+        .progress-label { font-size: 9px; }
     }
-    /* Maze container and controls */
-    .maze-container {
-        background: rgba(0,0,0,0.2);
-        border-radius: 16px;
-        padding: 10px;
-        border: 1px solid rgba(255,255,255,0.05);
+
+    @media (max-width: 850px) and (orientation: landscape) {
+        .hero-title { font-size: 1.3rem; }
+        .hero-subtitle { font-size: 0.7rem; }
+        .hero-quote { font-size: 0.6rem; }
+        .msg-bar { font-size: 0.65rem; padding: 3px 8px; margin: 2px 0 4px 0; }
+        .arrow-btn { width: 36px; height: 36px; font-size: 1rem; min-width: 32px; min-height: 32px; border-radius: 8px; }
+        div.stButton > button { font-size: 0.7rem; padding: 5px 8px; min-height: 30px; border-radius: 8px; }
+        .stat-label { font-size: 9px; }
+        .stat-value { font-size: 10px; }
+        .stat-row { padding: 2px 0; }
+        .style-name { font-size: 1rem; }
+        .maze-container { padding: 3px; border-radius: 8px; }
+        .result-card { padding: 10px; margin: 6px 0; }
+        .maze-controls { gap: 4px; margin-top: 4px; }
+        .arrow-grid { gap: 2px; margin: 3px 0; }
+        .arrow-row { gap: 3px; }
+        .progress-label { font-size: 8px; }
+        .maze-and-controls {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .maze-and-controls .maze-col { flex: 2; min-width: 0; }
+        .maze-and-controls .controls-col { flex: 1; min-width: 0; }
     }
-    .maze-controls {
-        display: flex;
-        gap: 12px;
-        margin-top: 10px;
-        margin-bottom: 6px;
+
+    @media (min-width: 481px) and (max-width: 1024px) {
+        .hero-title { font-size: 2.2rem; }
+        .hero-subtitle { font-size: 1rem; }
+        .hero-quote { font-size: 0.85rem; }
+        .arrow-btn { width: 58px; height: 58px; font-size: 1.6rem; min-width: 50px; min-height: 50px; }
+        div.stButton > button { font-size: 0.95rem; padding: 12px 18px; min-height: 48px; }
+        .stat-label { font-size: 13px; }
+        .stat-value { font-size: 15px; }
+        .style-name { font-size: 1.6rem; }
+        .maze-container { padding: 12px; }
+        .result-card { padding: 24px; }
+        .maze-controls { gap: 12px; }
+        .arrow-grid { gap: 8px; }
+        .arrow-row { gap: 10px; }
     }
-    .maze-controls > div {
-        flex: 1;
+
+    @media (min-width: 1025px) {
+        .hero-title { font-size: 3.2rem; }
+        .hero-subtitle { font-size: 1.1rem; }
+        .hero-quote { font-size: 0.9rem; }
+        .arrow-btn { width: 65px; height: 65px; font-size: 2rem; min-width: 56px; min-height: 56px; }
+        div.stButton > button { font-size: 1rem; padding: 12px 20px; min-height: 50px; }
+        .stat-label { font-size: 14px; }
+        .stat-value { font-size: 16px; }
+        .style-name { font-size: 1.8rem; }
+        .maze-container { padding: 16px; }
+        .result-card { padding: 28px; }
+        .maze-controls { gap: 16px; }
+        .arrow-grid { gap: 10px; }
+        .arrow-row { gap: 12px; }
     }
+
+    footer { visibility: hidden !important; }
+    #MainMenu { visibility: hidden !important; }
+    .stColumns { gap: 12px !important; }
+    .stColumn { min-width: 0 !important; padding: 0 4px !important; }
 </style>
 """,
     unsafe_allow_html=True,
 )
 
-
-# ------------------------------------------------------------------ #
-# Model loading
-# ------------------------------------------------------------------ #
+# ============================================================
+# 4. MODEL LOADING
+# ============================================================
 @st.cache_resource
 def get_model():
     return ml_model.load_or_train()
@@ -390,10 +557,9 @@ def get_model():
 
 SCALER, KMEANS, LABELS_MAP = get_model()
 
-
-# ------------------------------------------------------------------ #
-# Game state
-# ------------------------------------------------------------------ #
+# ============================================================
+# 5. GAME STATE
+# ============================================================
 def new_game_state(seed=None):
     maze = Maze(size=MAZE_SIZE, seed=seed)
     return {
@@ -492,17 +658,17 @@ def do_hint(state):
     state["message_icon"] = "lightbulb"
 
 
-# ------------------------------------------------------------------ #
-# Session state
-# ------------------------------------------------------------------ #
+# ============================================================
+# 6. SESSION STATE
+# ============================================================
 if "game" not in st.session_state:
     st.session_state.game = new_game_state()
 
 state = st.session_state.game
 
-# ------------------------------------------------------------------ #
-# Hero
-# ------------------------------------------------------------------ #
+# ============================================================
+# 7. HERO HEADER
+# ============================================================
 st.markdown(
     f'<div class="hero-title">{icon("compass", "36px", "#FF6B6B")} MAZE EXPLORER</div>',
     unsafe_allow_html=True,
@@ -517,18 +683,18 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ------------------------------------------------------------------ #
-# Status message
-# ------------------------------------------------------------------ #
+# ============================================================
+# 8. STATUS MESSAGE
+# ============================================================
 st.markdown(
     f'<div class="msg-bar">{icon(state["message_icon"], "18px", "#4ECDC4")}'
     f"<span>{state['message']}</span></div>",
     unsafe_allow_html=True,
 )
 
-# ------------------------------------------------------------------ #
-# Main play area
-# ------------------------------------------------------------------ #
+# ============================================================
+# 9. MAIN PLAY AREA
+# ============================================================
 maze_col, stats_col = st.columns([2, 1])
 
 with maze_col:
@@ -540,19 +706,18 @@ with maze_col:
         hint_cell=state["hint_cell"],
         show_solution=state["finished"],
     )
-    st.pyplot(fig, width='stretch')
+    st.pyplot(fig, use_container_width=True)
     
-    # ✅ BUTTONS UNDER THE MAZE
+    # Buttons under the maze
     st.markdown('<div class="maze-controls">', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("🔄 New Adventure", icon=":material/map:", type="primary", use_container_width=True):
+        if st.button("🔄 New Adventure", type="primary", use_container_width=True):
             st.session_state.game = new_game_state()
             st.rerun()
     with col2:
         if st.button(
             "💡 Need a Clue?",
-            icon=":material/lightbulb:",
             type="secondary",
             disabled=state["finished"],
             use_container_width=True,
@@ -606,27 +771,27 @@ with stats_col:
 
         _, up_c, _ = st.columns([1, 1, 1])
         with up_c:
-            if st.button("", icon=":material/keyboard_arrow_up:", key="up", use_container_width=True):
+            if st.button("⬆️", key="up", use_container_width=True):
                 do_move(state, "up")
                 st.rerun()
 
         left_c, down_c, right_c = st.columns([1, 1, 1])
         with left_c:
-            if st.button("", icon=":material/keyboard_arrow_left:", key="left", use_container_width=True):
+            if st.button("⬅️", key="left", use_container_width=True):
                 do_move(state, "left")
                 st.rerun()
         with down_c:
-            if st.button("", icon=":material/keyboard_arrow_down:", key="down", use_container_width=True):
+            if st.button("⬇️", key="down", use_container_width=True):
                 do_move(state, "down")
                 st.rerun()
         with right_c:
-            if st.button("", icon=":material/keyboard_arrow_right:", key="right", use_container_width=True):
+            if st.button("➡️", key="right", use_container_width=True):
                 do_move(state, "right")
                 st.rerun()
 
-# ------------------------------------------------------------------ #
-# Progress bar
-# ------------------------------------------------------------------ #
+# ============================================================
+# 10. PROGRESS BAR
+# ============================================================
 if not state["finished"]:
     progress = min(state["moves"] / max(state["maze"].optimal_length * 1.2, 1), 1.0)
     st.markdown(
@@ -642,9 +807,9 @@ else:
     )
     st.progress(1.0)
 
-# ------------------------------------------------------------------ #
-# Results
-# ------------------------------------------------------------------ #
+# ============================================================
+# 11. RESULTS
+# ============================================================
 if state["finished"]:
     st.markdown("---")
 
@@ -678,7 +843,7 @@ if state["finished"]:
 
     chart_col1, chart_col2 = st.columns(2)
     with chart_col1:
-        st.pyplot(path_efficiency_chart(efficiency), width='stretch')
+        st.pyplot(path_efficiency_chart(efficiency), use_container_width=True)
     with chart_col2:
         radar_scores = compute_radar_scores(
             {
@@ -691,14 +856,13 @@ if state["finished"]:
             },
             state["maze"].optimal_length,
         )
-        st.pyplot(radar_chart(radar_scores), width='stretch')
+        st.pyplot(radar_chart(radar_scores), use_container_width=True)
 
     st.markdown(
         f'<div class="fun-fact">{icon("book", "16px", "#4ECDC4")} {state["fun_fact"]}</div>',
         unsafe_allow_html=True,
     )
 
-    # "Play Again" button now uses "New Adventure" label
-    if st.button("🔄 New Adventure", icon=":material/replay:", type="primary", use_container_width=True):
+    if st.button("🔄 New Adventure", type="primary", use_container_width=True):
         st.session_state.game = new_game_state()
         st.rerun()
