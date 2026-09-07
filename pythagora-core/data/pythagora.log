@@ -1,0 +1,126 @@
+2026-09-07T07:56:41.814Z INFO Is remote: false
+2026-09-07T07:56:41.851Z INFO Starting Local. Installation path: c:\Users\User\Desktop\maze-explorer
+2026-09-07T07:56:41.861Z INFO [MainProvider] Creating new MainProvider instance...
+2026-09-07T07:56:41.869Z INFO [TabsManager] Code view listener set up at initialization
+2026-09-07T07:56:41.875Z INFO Installation path exists: c:\Users\User\Desktop\maze-explorer
+2026-09-07T07:56:41.877Z INFO Initializing database with URL: file:c:\Users\User\Desktop\maze-explorer\pythagora-core\data\database\pythagora.db
+2026-09-07T07:56:41.904Z INFO New database detected, running full prisma setup...
+2026-09-07T07:56:41.914Z INFO [c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19] Project root:
+2026-09-07T07:56:41.922Z INFO [c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\prisma\schema.prisma] Schema path:
+2026-09-07T07:56:41.929Z INFO [file:c:\Users\User\Desktop\maze-explorer\pythagora-core\data\database\pythagora.db] Database URL:
+2026-09-07T07:56:41.936Z INFO [true] Schema exists:
+2026-09-07T07:56:41.942Z INFO Running prisma generate first...
+2026-09-07T07:56:42.059Z ERROR Database initialization error
+Error: Command failed: node "c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\node_modules\prisma\build\index.js" generate --schema="c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\prisma\schema.prisma"
+'node' is not recognized as an internal or external command,
+operable program or batch file.
+
+Stack: Error: Command failed: node "c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\node_modules\prisma\build\index.js" generate --schema="c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\prisma\schema.prisma"
+'node' is not recognized as an internal or external command,
+operable program or batch file.
+
+	at genericNodeError (node:internal/errors:985:15)
+	at wrappedFn (node:internal/errors:539:14)
+	at checkExecSyncError (node:child_process:958:11)
+	at execSync (node:child_process:1030:15)
+	at node:electron/js2c/node_init:2:17464
+	at PrismaSession.ensureDatabaseSync (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\core\CustomPrismaSession.js:91:65)
+	at new PrismaSession (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\core\CustomPrismaSession.js:17:18)
+	at PrismaSession.getInstance (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\core\CustomPrismaSession.js:28:38)
+	at initializeDatabase (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\extension.js:45:45)
+	at activate (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\extension.js:107:15)
+	at async Ob._activate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:16021)
+	at async Ob._waitForDepsThenActivate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:15963)
+	at async Ob._initialize (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:15330)
+Extra context: {
+  "stdout": "",
+  "stderr": "'node' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n",
+  "signal": null,
+  "message": "Command failed: node \"c:\\Users\\User\\.vscode\\extensions\\pythagoratechnologies.pythagora-vs-code-2.6.19\\node_modules\\prisma\\build\\index.js\" generate --schema=\"c:\\Users\\User\\.vscode\\extensions\\pythagoratechnologies.pythagora-vs-code-2.6.19\\prisma\\schema.prisma\"\n'node' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n"
+}
+2026-09-07T07:56:42.094Z ERROR Failed to ensure database
+Error: Command failed: node "c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\node_modules\prisma\build\index.js" generate --schema="c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\prisma\schema.prisma"
+'node' is not recognized as an internal or external command,
+operable program or batch file.
+
+Stack: Error: Command failed: node "c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\node_modules\prisma\build\index.js" generate --schema="c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\prisma\schema.prisma"
+'node' is not recognized as an internal or external command,
+operable program or batch file.
+
+	at genericNodeError (node:internal/errors:985:15)
+	at wrappedFn (node:internal/errors:539:14)
+	at checkExecSyncError (node:child_process:958:11)
+	at execSync (node:child_process:1030:15)
+	at node:electron/js2c/node_init:2:17464
+	at PrismaSession.ensureDatabaseSync (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\core\CustomPrismaSession.js:91:65)
+	at new PrismaSession (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\core\CustomPrismaSession.js:17:18)
+	at PrismaSession.getInstance (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\core\CustomPrismaSession.js:28:38)
+	at initializeDatabase (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\extension.js:45:45)
+	at activate (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\extension.js:107:15)
+	at async Ob._activate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:16021)
+	at async Ob._waitForDepsThenActivate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:15963)
+	at async Ob._initialize (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:15330)
+Extra context: {
+  "stdout": "",
+  "stderr": "'node' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n",
+  "signal": null,
+  "message": "Command failed: node \"c:\\Users\\User\\.vscode\\extensions\\pythagoratechnologies.pythagora-vs-code-2.6.19\\node_modules\\prisma\\build\\index.js\" generate --schema=\"c:\\Users\\User\\.vscode\\extensions\\pythagoratechnologies.pythagora-vs-code-2.6.19\\prisma\\schema.prisma\"\n'node' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n"
+}
+2026-09-07T07:56:42.108Z INFO Database initialized successfully
+2026-09-07T07:56:42.119Z INFO [Migration] Checking for database migration...
+2026-09-07T07:56:42.122Z INFO [Migration] No migration needed
+2026-09-07T07:56:57.603Z INFO Starting right sidebar creation...
+2026-09-07T07:56:57.604Z INFO Initializing MainProvider...
+2026-09-07T07:56:57.605Z INFO Updating user profile...
+2026-09-07T07:56:57.607Z INFO No access token found when trying to fetch user profile
+2026-09-07T07:56:57.608Z INFO Creating right panel...
+2026-09-07T07:56:57.610Z INFO Creating right panel...
+2026-09-07T07:56:57.612Z INFO Closing all existing tabs...
+2026-09-07T07:56:59.733Z INFO Right panel webview created
+2026-09-07T07:56:59.737Z INFO Right panel HTML set successfully
+2026-09-07T07:56:59.738Z INFO Right panel setup completed
+2026-09-07T07:56:59.739Z INFO Setting up right panel dependencies...
+2026-09-07T07:56:59.752Z INFO Right panel dependencies setup complete, waiting for ready signal...
+2026-09-07T07:57:16.898Z WARN Webview ready timeout reached, resolving anyway
+2026-09-07T07:57:16.948Z INFO Right panel setup completed successfully
+2026-09-07T07:57:16.949Z INFO Right panel created via MainProvider
+2026-09-07T07:57:16.971Z INFO Storing initial prompt...
+2026-09-07T07:57:16.973Z INFO Tracing first panel open...
+2026-09-07T07:57:20.038Z INFO [Message Router] Routing rightPanelReady through unified router
+2026-09-07T07:57:23.854Z INFO [Message Router] Routing rightBarRendered through unified router
+2026-09-07T07:57:47.549Z INFO Right sidebar setup completed successfully
+2026-09-07T08:01:42.981Z INFO Right panel disposed, triggering cleanup...
+2026-09-07T08:01:43.010Z INFO Right panel disposed, cleaning up...
+2026-09-07T08:01:43.012Z INFO [Message Router] Routing coreExited through unified router
+2026-09-07T08:01:43.015Z INFO Closing entire Pythagora extension...
+2026-09-07T08:01:43.390Z INFO Pythagora extension closed
+2026-09-07T08:02:24.648Z INFO Closing entire Pythagora extension...
+2026-09-07T08:02:24.677Z ERROR Error closing extension
+Error: Canceled
+Stack: Canceled: Canceled
+	at new rS (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:435:152801)
+	at i._remoteCall (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:435:158885)
+	at r.<computed>.s.charCodeAt.r.<computed> (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:435:155638)
+	at uf._doExecuteCommand (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:48319)
+	at uf.executeCommand (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:542:47766)
+	at Object.executeCommand (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:672:139141)
+	at closeEntirePythagoraExtension (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\extension.js:542:31)
+	at Object.deactivate (c:\Users\User\.vscode\extensions\pythagoratechnologies.pythagora-vs-code-2.6.19\out\extension.js:409:15)
+	at FR._deactivate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:546:14930)
+	at file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:546:12457
+	at Array.map (<anonymous>)
+	at FR._deactivateAll (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:546:12445)
+	at FR.terminate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:546:12796)
+	at i.terminate (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:548:1072)
+	at ma (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:851:11797)
+	at Np.value (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:851:9939)
+	at T._deliver (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:431:3617)
+	at T.fire (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:431:3935)
+	at ys.fire (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:433:8627)
+	at MessagePortMain.<anonymous> (file:///c:/Users/User/AppData/Local/Programs/Microsoft%20VS%20Code/a44adf7f53/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:851:8171)
+	at MessagePortMain.emit (node:events:509:28)
+	at MessagePortMain.emit (node:domain:489:12)
+	at Object.emit (node:electron/js2c/utility_init:2:2934)
+Extra context: {
+  "message": "Canceled"
+}
