@@ -8,6 +8,7 @@ app_file: app.py
 pinned: false
 suggested_hardware: cpu-basic
 short_description: Navigate a maze — K-Means clustering reveals your play style
+live_Demo: https://mazeexplorer-8k2jdehief8ptthxphtkkg.streamlit.app/
 ---
 
 # 🧩 Maze Explorer
